@@ -1,3 +1,5 @@
 /build/
 /.vscode/*.log
 /.cache/
+src/main
+src/aula*[!.cpp]
