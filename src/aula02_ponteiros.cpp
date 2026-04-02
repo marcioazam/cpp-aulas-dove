@@ -48,11 +48,15 @@ void rodarAula02()
     int  numero   = 100;
     int* ponteiro = &numero;    // ponteiro guarda o endereço de 'numero'
 
+    // O endereço de memória é um número hexadecimal (base 16, ex: 0x7ffe3a1b).
+    // Pense nele como o "numero do apartamento" — um identificador unico na RAM.
+    // Você nunca escreve esse número à mão; o sistema operacional escolhe.
+
     std::cout << "--- PONTEIROS ---" << std::endl;
     std::cout << "Valor de numero:           " << numero     << std::endl;
-    std::cout << "Endereco de numero (&):    " << &numero    << std::endl;
-    std::cout << "Valor do ponteiro (p):     " << ponteiro   << "  (mesmo endereco)" << std::endl;
-    std::cout << "Valor apontado (*p):       " << *ponteiro  << "  (mesmo valor de numero)" << std::endl;
+    std::cout << "Endereco de numero (&):    " << &numero    << "  <- numero do 'apartamento' na RAM" << std::endl;
+    std::cout << "Valor do ponteiro (p):     " << ponteiro   << "  <- mesmo endereco" << std::endl;
+    std::cout << "Valor apontado (*p):       " << *ponteiro  << "  <- vai ate o endereco e pega o valor" << std::endl;
 
     // Modificar via ponteiro modifica o original
     *ponteiro = 200;
@@ -65,12 +69,9 @@ void rodarAula02()
     if (nulo != nullptr) {
         std::cout << *nulo << std::endl;   // nunca executa — seguro
     } else {
-        std::cout << "Acesso bloqueado: ponteiro esta nulo" << std::endl;
+        std::cout << "Acesso bloqueado: ponteiro esta nulo (segfault evitado)" << std::endl;
     }
-
-    // Ponteiro para ponteiro
-    int** pp = &ponteiro;   // pp guarda o endereço do ponteiro p
-    std::cout << "**pp (ponteiro de ponteiro): " << **pp << "  (mesmo valor)" << std::endl << std::endl;
+    std::cout << std::endl;
 
 
     // =========================================================================
@@ -120,10 +121,9 @@ void rodarAula02()
     //   - O primeiro a entrar é o primeiro a sair.
     //
     // USO REAL:
-    //   - Fila de impressão de documentos
-    //   - Requisições HTTP em servidores web
-    //   - Mensagens em sistemas de filas (Kafka, RabbitMQ)
-    //   - BFS (busca em largura) em grafos
+    //   - Fila de impressão: o primeiro documento enviado é o primeiro a imprimir
+    //   - Atendimento de suporte: o primeiro cliente que abriu chamado é atendido primeiro
+    //   - Download em sequência: arquivos baixam na ordem em que foram pedidos
     //
     // OPERAÇÕES:
     //   push(x)  → entra no FINAL da fila
@@ -208,8 +208,13 @@ void rodarAula02()
     }
     std::cout << "Soma da diagonal principal (1+5+9): " << somaDiagonal << std::endl;
 
-    // Transposição: troca linhas por colunas
-    std::cout << "Matriz transposta (linhas viram colunas):" << std::endl;
+    // Transposição: "virar" a matriz — linha vira coluna, coluna vira linha.
+    // Original:        Transposta:
+    //  [ 1  2  3 ]      [ 1  4  7 ]
+    //  [ 4  5  6 ]  ->  [ 2  5  8 ]
+    //  [ 7  8  9 ]      [ 3  6  9 ]
+    // Em vez de ler linha por linha, lemos coluna por coluna.
+    std::cout << "Matriz transposta (coluna vira linha):" << std::endl;
     for (int j = 0; j < COLUNAS; ++j) {
         std::cout << "  [ ";
         for (int i = 0; i < LINHAS; ++i) {
