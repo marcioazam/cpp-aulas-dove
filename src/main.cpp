@@ -1,7 +1,8 @@
 #include <iostream>
 #include "aula01_tipos.h"
-#include "aula02_tipos_modernos.h"
-#include "aula03_controle.h"
+#include "aula02_ponteiros.h"
+#include "aula03_tipos_modernos.h"
+#include "aula04_controle.h"
 
 int main()
 {
@@ -11,8 +12,9 @@ int main()
     std::cout << "   SELECIONE A AULA            " << std::endl;
     std::cout << "================================" << std::endl;
     std::cout << " 1 - Tipos de dados            " << std::endl;
-    // std::cout << " 2 - Tipos modernos C++11/17 (Block)   " << std::endl;
-    // std::cout << " 3 - Estruturas de controle  (Block)  " << std::endl;
+    std::cout << " 2 - Ponteiros, Pilha, Fila e Matriz " << std::endl;
+    // std::cout << " 3 - Tipos modernos C++11/17   (Block)  " << std::endl;
+    // std::cout << " 4 - Estruturas de controle    (Block)  " << std::endl;
     std::cout << "================================" << std::endl;
     std::cout << "Aula: ";
     std::cin >> aula;
@@ -25,6 +27,7 @@ int main()
             break;
 
         case 2:
+            rodarAula02();
             break;
 
         case 3:

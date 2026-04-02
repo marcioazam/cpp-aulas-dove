@@ -9,8 +9,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(cppsmoke
     src/main.cpp
     src/aula01_tipos.cpp
-    src/aula02_tipos_modernos.cpp
-    src/aula03_controle.cpp
+    src/aula02_ponteiros.cpp
+    src/aula03_tipos_modernos.cpp
+    src/aula04_controle.cpp
 )
 target_include_directories(cppsmoke PRIVATE include)
 
