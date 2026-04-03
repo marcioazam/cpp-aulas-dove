@@ -4,6 +4,7 @@
 #include "aula02_ponteiros.h"
 #include "aula03_tipos_modernos.h"
 #include "aula04_controle.h"
+#include "aula05_containers.h"
 
 int main()
 {
@@ -17,6 +18,7 @@ int main()
     std::cout << " 2 - Array, Ponteiros, Pilha, Fila e Matriz " << std::endl;
     std::cout << " 3 - Tipos modernos C++11/17   " << std::endl;
     std::cout << " 4 - Estruturas de controle    " << std::endl;
+    std::cout << " 5 - Conteineres e Tipos Compostos " << std::endl;
     std::cout << "================================" << std::endl;
     std::cout << "Aula: ";
     std::cin >> aula;
@@ -42,6 +44,10 @@ int main()
 
         case 4:
             rodarAula04();
+            break;
+
+        case 5:
+            rodarAula05();
             break;
 
         default:
