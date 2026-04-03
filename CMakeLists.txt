@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(cppsmoke
     src/main.cpp
+    src/aula00_intro.cpp
     src/aula01_tipos.cpp
     src/aula02_ponteiros.cpp
     src/aula03_tipos_modernos.cpp
