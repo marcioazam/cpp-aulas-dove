@@ -12,6 +12,8 @@
 //   13. while                — loop enquanto condição for verdadeira
 //   14. do-while             — loop que garante pelo menos uma execução
 //   15. break e continue     — controle de fluxo dentro de loops
+//   40. and, or, not         — tokens alternativos ISO C++ para operadores lógicos
+//   41. bitand, bitor, xor, compl — tokens alternativos para operadores bitwise
 //
 // =============================================================================
 
@@ -23,6 +25,8 @@
 
 static void demonstrarEstruturas();
 static void demonstrarPilhaFila();
+static void demonstrarOperadoresLogicosAlt();
+static void demonstrarOperadoresBit();
 
 // =============================================================================
 // PONTO DE ENTRADA DA AULA 04
@@ -399,6 +403,17 @@ void rodarAula04()
 
 
     // =========================================================================
+    // 40. OPERADORES LÓGICOS ALTERNATIVOS (and / or / not)
+    // =========================================================================
+    demonstrarOperadoresLogicosAlt();
+
+    // =========================================================================
+    // 41. OPERADORES BITWISE ALTERNATIVOS (bitand / bitor / xor / compl)
+    // =========================================================================
+    demonstrarOperadoresBit();
+
+
+    // =========================================================================
     // FUNÇÃO COM TODAS AS ESTRUTURAS JUNTAS
     // =========================================================================
     std::cout << "=============================================" << std::endl;
@@ -595,6 +610,149 @@ static void demonstrarPilhaFila()
     std::cout << "Resumo:" << std::endl;
     std::cout << "  stack  → LIFO | topo com top()  | header: <stack>"  << std::endl;
     std::cout << "  queue  → FIFO | frente com front() | header: <queue>" << std::endl;
+}
+
+
+// =============================================================================
+// FUNÇÃO INTERNA: demonstrarOperadoresLogicosAlt()
+// =============================================================================
+static void demonstrarOperadoresLogicosAlt()
+{
+    // =========================================================================
+    // OPERADORES LÓGICOS ALTERNATIVOS — and / or / not
+    // =========================================================================
+    // O C++ define palavras-chave alternativas para os operadores lógicos.
+    // São 100% equivalentes — o compilador trata identicamente.
+    //
+    //   Símbolo │ Alternativa │ Significado
+    //   --------│-------------|----------------------------------------------
+    //   &&      │ and         │ E lógico — AMBAS precisam ser verdadeiras
+    //   ||      │ or          │ OU lógico — PELO MENOS UMA verdadeira
+    //   !       │ not         │ NÃO lógico — inverte o valor booleano
+    //
+    // Por que existem?
+    //   - Padrão ISO C++ (C++11 nativo, sem precisar incluir <iso646.h>)
+    //   - Origem histórica: teclados que não tinham &, | e !
+    //   - Melhoram legibilidade em condições complexas com muitos &&/||
+    //
+    // Ambos os estilos são válidos. Use o que o projeto adota por consistência.
+    // =========================================================================
+
+    std::cout << "--- OPERADORES LOGICOS ALTERNATIVOS (and / or / not) ---" << std::endl;
+
+    int  idade  = 20;
+    bool temRG  = true;
+    bool temCNH = false;
+
+    // && equivale a 'and'
+    std::cout << "Simbolo: (idade >= 18 && temRG)  = " << (idade >= 18 && temRG)  << std::endl;
+    std::cout << "Alt.   : (idade >= 18 and temRG) = " << (idade >= 18 and temRG) << std::endl;
+    std::cout << std::endl;
+
+    // || equivale a 'or'
+    std::cout << "Simbolo: (temRG || temCNH)  = " << (temRG || temCNH)  << std::endl;
+    std::cout << "Alt.   : (temRG or temCNH)  = " << (temRG or temCNH)  << std::endl;
+    std::cout << std::endl;
+
+    // ! equivale a 'not'
+    std::cout << "Simbolo: (!temCNH)      = " << (!temCNH)      << std::endl;
+    std::cout << "Alt.   : (not temCNH)   = " << (not temCNH)   << std::endl;
+    std::cout << std::endl;
+
+    // Combinando — frase quase em linguagem natural
+    if (idade >= 18 and temRG and not temCNH) {
+        std::cout << "Maior de idade com RG, mas sem CNH." << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+
+// =============================================================================
+// FUNÇÃO INTERNA: demonstrarOperadoresBit()
+// =============================================================================
+static void demonstrarOperadoresBit()
+{
+    // =========================================================================
+    // OPERADORES BITWISE ALTERNATIVOS — bitand / bitor / xor / compl
+    // =========================================================================
+    // Assim como os lógicos, os operadores bitwise têm tokens alternativos.
+    //
+    //   Símbolo │ Alternativa │ Operação
+    //   --------│-------------|----------------------------------------------
+    //   &       │ bitand      │ AND bit a bit — 1 apenas se AMBOS forem 1
+    //   |       │ bitor       │ OR  bit a bit — 1 se PELO MENOS UM for 1
+    //   ^       │ xor         │ XOR bit a bit — 1 apenas se forem DIFERENTES
+    //   ~       │ compl       │ Complemento   — inverte TODOS os bits
+    //
+    // LITERAIS BINÁRIOS (C++14):
+    //   Prefixo 0b ou 0B → número escrito em base 2
+    //   0b1010 = 10 em decimal  (bits: 1·8 + 0·4 + 1·2 + 0·1)
+    //   0b1100 = 12 em decimal  (bits: 1·8 + 1·4 + 0·2 + 0·1)
+    //
+    // Onde operadores bitwise são usados na prática:
+    //   - Flags de permissão (chmod Linux: rwxrwxrwx)
+    //   - Máscaras de bits (setar, limpar, verificar bits específicos)
+    //   - Compressão e criptografia
+    //   - Protocolos de rede (IPv4, flags TCP)
+    // =========================================================================
+
+    std::cout << "--- OPERADORES BITWISE ALTERNATIVOS (bitand / bitor / xor / compl) ---" << std::endl;
+
+    int a = 0b1010;  // 10 em decimal: bits 3 e 1 ligados (0=desligado, 1=ligado)
+    int b = 0b1100;  // 12 em decimal: bits 3 e 2 ligados
+
+    std::cout << "a = 0b1010 = " << a << " (decimal)" << std::endl;
+    std::cout << "b = 0b1100 = " << b << " (decimal)" << std::endl;
+    std::cout << std::endl;
+
+    // & / bitand — AND: resultado 1 apenas onde AMBOS têm 1
+    //   1 0 1 0   (a)
+    //   1 1 0 0   (b)
+    //   -------
+    //   1 0 0 0   = 8
+    std::cout << "AND  simbolo:  a  & b  = " << (a  & b)       << "  (esperado 8)"  << std::endl;
+    std::cout << "AND  alt.   :  a bitand b = " << (a bitand b) << "  (esperado 8)"  << std::endl;
+    std::cout << std::endl;
+
+    // | / bitor — OR: resultado 1 onde PELO MENOS UM tem 1
+    //   1 0 1 0   (a)
+    //   1 1 0 0   (b)
+    //   -------
+    //   1 1 1 0   = 14
+    std::cout << "OR   simbolo:  a  | b  = " << (a  | b)      << "  (esperado 14)" << std::endl;
+    std::cout << "OR   alt.   :  a bitor b = " << (a bitor b)  << "  (esperado 14)" << std::endl;
+    std::cout << std::endl;
+
+    // ^ / xor — XOR: resultado 1 apenas onde os bits são DIFERENTES
+    //   1 0 1 0   (a)
+    //   1 1 0 0   (b)
+    //   -------
+    //   0 1 1 0   = 6
+    std::cout << "XOR  simbolo:  a  ^ b  = " << (a  ^ b)    << "  (esperado 6)"  << std::endl;
+    std::cout << "XOR  alt.   :  a xor b = " << (a xor b)   << "  (esperado 6)"  << std::endl;
+    std::cout << std::endl;
+
+    // ~ / compl — NOT: inverte TODOS os 32 bits do int
+    std::cout << "NOT  simbolo:  ~a      = " << (~a)         << "  (complemento de " << a << ")" << std::endl;
+    std::cout << "NOT  alt.   :  compl a = " << (compl a)   << "  (complemento de " << a << ")" << std::endl;
+    std::cout << std::endl;
+
+    // Exemplo prático: sistema de permissões com flags de bit
+    std::cout << "Exemplo: flags de permissao (bitmask)" << std::endl;
+    constexpr int LEITURA  = 0b0001;  // bit 0
+    constexpr int ESCRITA  = 0b0010;  // bit 1
+    constexpr int EXECUCAO = 0b0100;  // bit 2
+
+    int permissoes = LEITURA bitor ESCRITA;  // ativa leitura E escrita
+    std::cout << "  Permissoes ativas (leitura + escrita): " << permissoes << std::endl;
+
+    // Verificar se um bit específico está ativo com bitand
+    if (permissoes bitand LEITURA)  std::cout << "  Leitura:  permitida" << std::endl;
+    if (permissoes bitand ESCRITA)  std::cout << "  Escrita:  permitida" << std::endl;
+    if (not (permissoes bitand EXECUCAO))
+        std::cout << "  Execucao: negada"    << std::endl;
+
+    std::cout << std::endl;
 }
 
 
