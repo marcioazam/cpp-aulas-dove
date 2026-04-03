@@ -9,11 +9,12 @@
 // Tópicos desta aula:
 //   1. auto       — dedução automática de tipo
 //   2. decltype   — tipo de uma expressão em compilação
-//   3. nullptr    — ponteiro nulo seguro
-//   4. int32_t / uint64_t — inteiros de tamanho fixo (<cstdint>)
-//   5. size_t     — tipo correto para tamanhos e índices
-//   6. std::string vs char[]
-//   7. std::optional<T> (C++17) — valor que pode não existir
+//   3. int32_t / uint64_t — inteiros de tamanho fixo (<cstdint>)
+//   4. size_t     — tipo correto para tamanhos e índices
+//   5. std::string vs char[]
+//   6. std::optional<T> (C++17) — valor que pode não existir
+//
+//   Nota: nullptr foi movido para a Aula 02 (Ponteiros), onde se encaixa melhor.
 //
 // =============================================================================
 
@@ -136,50 +137,7 @@ void rodarAula03()
 
 
     // =========================================================================
-    // 3. NULLPTR (C++11)
-    // =========================================================================
-    // ANALOGIA: um ponteiro é como uma placa com um endereço escrito.
-    //   int* p = &x;   → a placa tem o endereço de x
-    //   int* p = nullptr; → a placa está EM BRANCO (não aponta para nada)
-    //
-    // nullptr é essa "placa em branco" oficial do C++ moderno.
-    //
-    // REGRA FUNDAMENTAL:
-    //   NUNCA acesse um ponteiro sem antes verificar se ele é nullptr.
-    //   Se você tentar ler *p quando p = nullptr → o programa TRAVA (segfault).
-    //
-    //   if (p != nullptr) {
-    //       std::cout << *p;   ← seguro: só acessa se há endereço válido
-    //   }
-    //
-    // POR QUE NÃO usar NULL ou 0 (jeito antigo)?
-    //   NULL era definido como o número 0 — o compilador não sabia se você
-    //   queria o número zero ou um ponteiro nulo. nullptr é inequívoco:
-    //   só pode ser um ponteiro. Nunca use NULL ou 0 em C++ moderno.
-    // =========================================================================
-
-    int* ponteiroNulo   = nullptr;    // ponteiro para int, mas aponta para nada
-    int  valorReal      = 42;
-    int* ponteiroValido = &valorReal; // ponteiro para int, aponta para valorReal
-
-    std::cout << "--- NULLPTR (C++11) ---" << std::endl;
-    std::cout << "ponteiroNulo == nullptr? " << (ponteiroNulo == nullptr ? "sim" : "nao") << std::endl;
-
-    // Verificação segura antes de usar o ponteiro
-    if (ponteiroNulo != nullptr) {
-        std::cout << "Valor pelo ponteiro nulo: " << *ponteiroNulo << std::endl;
-    } else {
-        std::cout << "Ponteiro nulo: acesso bloqueado com seguranca" << std::endl;
-    }
-
-    if (ponteiroValido != nullptr) {
-        std::cout << "Valor pelo ponteiro valido: " << *ponteiroValido << std::endl;
-    }
-    std::cout << std::endl;
-
-
-    // =========================================================================
-    // 4. INTEIROS DE TAMANHO FIXO — int32_t, uint64_t, etc. (<cstdint>)
+    // 3. INTEIROS DE TAMANHO FIXO — int32_t, uint64_t, etc. (<cstdint>)
     // =========================================================================
     // O PROBLEMA com int/long:
     //   - int tem 4 bytes na maioria das plataformas, mas não é garantido.
@@ -231,7 +189,7 @@ void rodarAula03()
 
 
     // =========================================================================
-    // 5. SIZE_T — O TIPO CORRETO PARA TAMANHOS E ÍNDICES
+    // 4. SIZE_T — O TIPO CORRETO PARA TAMANHOS E ÍNDICES
     // =========================================================================
     // size_t é um tipo sem sinal definido pelo sistema operacional.
     //   - Em sistemas 32-bit: uint32_t (0 a 4.29bi)
@@ -267,7 +225,7 @@ void rodarAula03()
 
 
     // =========================================================================
-    // 6. STD::STRING vs CHAR[]
+    // 5. STD::STRING vs CHAR[]
     // =========================================================================
     // char[] é herança do C. std::string é o jeito moderno e seguro.
     //
@@ -306,7 +264,7 @@ void rodarAula03()
 
 
     // =========================================================================
-    // 7. STD::OPTIONAL<T> (C++17)
+    // 6. STD::OPTIONAL<T> (C++17)
     // =========================================================================
     // ANALOGIA: uma caixa que pode estar vazia ou ter algo dentro.
     //

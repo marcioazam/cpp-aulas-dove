@@ -14,7 +14,7 @@ int main()
     std::cout << "================================" << std::endl;
     std::cout << " 0 - Introducao (comece aqui!) " << std::endl;
     std::cout << " 1 - Tipos de dados            " << std::endl;
-    std::cout << " 2 - Ponteiros, Pilha, Fila e Matriz " << std::endl;
+    std::cout << " 2 - Array, Ponteiros, Pilha, Fila e Matriz " << std::endl;
     // std::cout << " 3 - Tipos modernos C++11/17   (Block)  " << std::endl;
     // std::cout << " 4 - Estruturas de controle    (Block)  " << std::endl;
     std::cout << "================================" << std::endl;
