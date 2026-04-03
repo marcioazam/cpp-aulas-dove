@@ -8,6 +8,9 @@
 //   2. Quais valores cabem nessa memória
 //   3. O que você pode fazer com esse valor (operações)
 //
+// Tipos cobertos: bool · char · int · float · double · short · long long · unsigned
+// Extras:         operadores aritméticos · casting · overflow · const
+//
 // =============================================================================
 
 #include "aula01_tipos.h"
@@ -207,6 +210,8 @@ void rodarAula01()
     //   - Operações bit a bit (bitmasks)
     //
     // CUIDADO: unsigned int x = 0; x = x - 1; → x vira 4.294.967.295 !!
+    //
+    //  DICA: Use sufixo 'ULL' para literais: 9000000000ULL
     // =========================================================================
 
     unsigned long  quantidadeDeJogadores = 4;
@@ -222,6 +227,184 @@ void rodarAula01()
     std::cout << "Bytes transferidos: " << bytesTransferidos      << std::endl;
     std::cout << "unsigned int max:   " << UINT_MAX               << std::endl;
     std::cout << "int max (signed):   " << INT_MAX << " (metade)" << std::endl << std::endl;
+
+
+    // =========================================================================
+    // OPERADORES ARITMÉTICOS
+    // =========================================================================
+    // Os operadores definem o que você pode FAZER com os tipos numéricos.
+    //
+    //   +   soma
+    //   -   subtração
+    //   *   multiplicação
+    //   /   divisão  ← CUIDADO: comportamento diferente para int e double!
+    //   %   módulo (resto da divisão inteira) — só funciona com inteiros
+    //
+    // DIVISÃO INTEIRA — a armadilha mais comum para iniciantes:
+    //   int / int sempre trunca (joga fora) a parte decimal.
+    //   7 / 2 = 3  (não 3.5!)
+    //   Para obter 3.5, pelo menos um dos lados precisa ser double:
+    //   7 / 2.0 = 3.5   ou   static_cast<double>(7) / 2 = 3.5
+    //
+    // MÓDULO `%` — retorna o RESTO da divisão inteira:
+    //   10 % 3 = 1  porque 10 = 3×3 + 1
+    //   Usos: verificar paridade (x % 2 == 0 → par), ciclos, índices circulares
+    // =========================================================================
+
+    std::cout << "--- OPERADORES ARITMETICOS ---" << std::endl;
+
+    int a = 7, b = 2;
+    std::cout << "a = " << a << ", b = " << b << std::endl;
+    std::cout << "a + b = " << a + b << std::endl;
+    std::cout << "a - b = " << a - b << std::endl;
+    std::cout << "a * b = " << a * b << std::endl;
+    std::cout << "a / b = " << a / b << "  <- divisao INTEIRA (trunca!)" << std::endl;
+    std::cout << "a / 2.0 = " << std::fixed << std::setprecision(1)
+              << a / 2.0 << "  <- divisao REAL (um lado e double)" << std::endl;
+    std::cout << "a % b = " << a % b << "  <- resto: 7 = 2x3 + 1" << std::endl;
+
+    std::cout << "10 % 2 = " << 10 % 2 << "  (par: resto zero)"     << std::endl;
+    std::cout << "11 % 2 = " << 11 % 2 << "  (impar: resto um)"      << std::endl;
+    std::cout << "10 % 3 = " << 10 % 3 << "  (10 = 3x3 + 1)"        << std::endl;
+    std::cout << std::endl;
+
+
+    // =========================================================================
+    // CONVERSÃO DE TIPOS (TYPE CASTING)
+    // =========================================================================
+    // Às vezes você precisa converter um valor de um tipo para outro.
+    // Há dois jeitos: implícito (automático) e explícito (você decide).
+    //
+    // IMPLÍCITO — o compilador converte automaticamente:
+    //   int x = 3.9;     → x vale 3  (trunca, não arredonda!)
+    //   double d = 5;    → d vale 5.0 (seguro, sem perda)
+    //
+    //   Narrowing (perigoso, pode perder dados):  double → int, int → char
+    //   Widening (seguro, sem perda):              int → double, char → int
+    //
+    // EXPLÍCITO — static_cast<TIPO>(valor):
+    //   static_cast<int>(3.9)         → 3   (você decide conscientemente)
+    //   static_cast<double>(7) / 2    → 3.5 (força divisão real)
+    //   static_cast<int>('A')         → 65  (valor ASCII do caractere)
+    //   static_cast<char>(65)         → 'A' (65 na tabela ASCII = 'A')
+    //
+    // REGRA: prefira static_cast ao invés de conversão implícita — deixa claro
+    //        para o leitor (e para o compilador) que a conversão é intencional.
+    // =========================================================================
+
+    std::cout << "--- CONVERSAO DE TIPOS (CASTING) ---" << std::endl;
+
+    // Implícita: double → int (trunca, não arredonda)
+    // Em código real: int iValor = dValor;  ← compila mas gera warning -Wconversion
+    double dValor  = 3.9;
+    int    iValor  = static_cast<int>(dValor);   // explícita — mesmo resultado, sem warning
+    std::cout << "double 3.9 -> int (truncado):          " << iValor
+              << "  (truncou, nao arredondou!)" << std::endl;
+
+    // Explícita com static_cast
+    std::cout << "static_cast<int>(3.9):                 "
+              << static_cast<int>(3.9) << std::endl;
+    std::cout << "static_cast<int>(3.1):                 "
+              << static_cast<int>(3.1) << std::endl;
+
+    // Forçar divisão real
+    int x = 7, y = 2;
+    std::cout << "7 / 2 (int/int):                       "
+              << x / y << "  (inteiro)" << std::endl;
+    std::cout << "static_cast<double>(7) / 2:            "
+              << std::setprecision(1) << static_cast<double>(x) / y
+              << "  (real)" << std::endl;
+
+    // char ↔ int (tabela ASCII)
+    char letra = 'A';
+    std::cout << "static_cast<int>('A'):                 "
+              << static_cast<int>(letra) << "  (valor ASCII de 'A')" << std::endl;
+    std::cout << "static_cast<char>(66):                 "
+              << static_cast<char>(66) << "  (ASCII 66 = 'B')" << std::endl;
+    std::cout << std::endl;
+
+
+    // =========================================================================
+    // OVERFLOW E UNDERFLOW
+    // =========================================================================
+    // Cada tipo tem um limite. O que acontece ao ultrapassar esse limite?
+    //
+    // OVERFLOW (passou do máximo):
+    //   INT_MAX + 1 → comportamento indefinido em signed (na prática: vira INT_MIN)
+    //   É como um velocímetro que passa de 999km/h e volta para 000km/h.
+    //
+    // UNDERFLOW UNSIGNED (passou do mínimo):
+    //   0u - 1 → 4.294.967.295  (wraparound garantido para unsigned)
+    //   Unsigned nunca é negativo — "volta" para o máximo.
+    //
+    // COMO EVITAR:
+    //   - Escolha o tipo certo para o range do valor
+    //   - Antes de somar, verifique se o resultado cabe no tipo
+    //   - Use tipos maiores (long long) para valores que podem crescer muito
+    // =========================================================================
+
+    std::cout << "--- OVERFLOW / UNDERFLOW ---" << std::endl;
+
+    // volatile impede que o compilador calcule em tempo de compilação,
+    // permitindo demonstrar o overflow em execução sem warning
+    volatile int maxInt = INT_MAX;
+    int overflowInt = maxInt + 1;
+    std::cout << "INT_MAX:               " << maxInt      << std::endl;
+    std::cout << "INT_MAX + 1:           " << overflowInt
+              << "  <- overflow! voltou para INT_MIN" << std::endl;
+
+    unsigned int underflowUnsigned = 0u - 1u; // underflow unsigned: wraparound garantido
+    std::cout << "unsigned 0 - 1:        " << underflowUnsigned
+              << "  <- underflow! voltou para UINT_MAX" << std::endl;
+
+    // Escolha certa evita overflow
+    long long populacao = (long long)INT_MAX + 1;  // sem overflow: cabe em long long
+    std::cout << "long long INT_MAX + 1: " << populacao
+              << "  <- sem overflow (tipo maior)" << std::endl;
+    std::cout << std::endl;
+
+
+    // =========================================================================
+    // CONST — VARIÁVEIS IMUTÁVEIS
+    // =========================================================================
+    // `const` declara que o valor NÃO pode ser alterado após a inicialização.
+    // Tentar alterar uma const → ERRO DE COMPILAÇÃO (não deixa nem compilar).
+    //
+    // Por que usar const?
+    //   1. Documenta a intenção: "este valor não deve mudar"
+    //   2. O compilador protege: você não muda por acidente
+    //   3. Permite otimizações pelo compilador
+    //
+    // CONVENÇÃO DE NOMENCLATURA:
+    //   Constantes usam UPPER_SNAKE_CASE (tudo maiúsculo com underscores):
+    //   MAX_VIDAS, PRECO_BASE, LARGURA_TELA, TAXA_JUROS
+    //
+    // DIFERENÇA DE #define (jeito antigo):
+    //   #define MAX 10        → substituição de texto, sem tipo, sem escopo
+    //   const int MAX = 10;   → tem tipo, tem escopo, é verificada pelo compilador
+    //   Prefira sempre const (ou constexpr para valores em tempo de compilação).
+    // =========================================================================
+
+    std::cout << "--- CONST ---" << std::endl;
+
+    const int    MAX_VIDAS        = 3;
+    const double TAXA_DESCONTO    = 0.15;   // 15%
+    const char   TECLA_SAIR       = 'Q';
+
+    std::cout << "MAX_VIDAS:      " << MAX_VIDAS     << std::endl;
+    std::cout << "TAXA_DESCONTO:  " << std::setprecision(0)
+              << TAXA_DESCONTO * 100 << "%" << std::endl;
+    std::cout << "TECLA_SAIR:     " << TECLA_SAIR    << std::endl;
+
+    double precoOriginal  = 200.0;
+    double precoFinal     = precoOriginal * (1.0 - TAXA_DESCONTO);
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Preco R$ " << precoOriginal << " com desconto de "
+              << TAXA_DESCONTO * 100 << "%% = R$ " << precoFinal << std::endl;
+
+    // MAX_VIDAS = 5;   ← isto causaria ERRO DE COMPILACAO — const nao pode mudar
+    std::cout << "Tentar MAX_VIDAS = 5 causaria erro de compilacao." << std::endl;
+    std::cout << std::endl;
 
 
     // =========================================================================
