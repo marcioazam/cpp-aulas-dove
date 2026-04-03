@@ -259,8 +259,27 @@ void rodarAula03()
     // =========================================================================
     // ANALOGIA: uma caixa que pode estar vazia ou ter algo dentro.
     //
-    //   std::optional<int> caixa = 42;           → caixa com o número 42
-    //   std::optional<int> caixa = std::nullopt; → caixa vazia (sem valor)
+    //   std::optional<int> caixa = 42;           → caixa com o número 42 dentro
+    //   std::optional<int> caixa = std::nullopt; → caixa explicitamente vazia
+    //   std::optional<int> caixa;                → caixa vazia (padrão, sem valor)
+    //
+    // --- O QUE É std::nullopt? ---
+    //   std::nullopt é uma constante especial do C++17 que representa
+    //   "ausência de valor" para um optional.
+    //
+    //   Pense nele como a "caixa vazia oficial" — um objeto do tipo
+    //   std::nullopt_t que só pode ser atribuído a um optional.
+    //   É parecido com nullptr para ponteiros: inequívoco e seguro.
+    //
+    //   Por que não usar 0, -1 ou "" para representar "sem valor"?
+    //     - int:    0 e -1 podem ser valores válidos
+    //     - string: "" (vazio) pode ser uma resposta válida
+    //     - std::nullopt é inequívoco: sempre significa "não há valor"
+    //
+    //   Três formas de criar um optional vazio (todas equivalentes):
+    //     std::optional<int> a = std::nullopt;  ← explícito e legível
+    //     std::optional<int> b;                 ← padrão, também vazio
+    //     std::optional<int> c = {};             ← inicialização vazia
     //
     // PROBLEMA que optional resolve:
     //   Imagine uma função que busca um usuário pelo id.
@@ -280,27 +299,38 @@ void rodarAula03()
     // COMO USAR:
     //   .has_value()  → "tem algo na caixa?" (true/false)
     //   .value()      → "me dá o que está dentro" (CUIDADO: lança exceção se vazio!)
-    //   .value_or(X)  → "me dá o que está dentro, ou X se estiver vazia"
+    //   .value_or(X)  → "me dá o que está dentro, ou X se estiver vazia" — PREFIRA ESTE
+    //   .reset()      → esvazia o optional (coloca std::nullopt)
     //
     // REGRA: prefira .value_or() — ela é segura mesmo se a caixa estiver vazia.
     // =========================================================================
 
-    std::optional<int>         idadeEncontrada = 25;            // tem valor
-    std::optional<int>         idadeNaoAchada  = std::nullopt;  // sem valor
-    std::optional<std::string> nomeEncontrado  = "Roger";       // tem valor
-    std::optional<std::string> nomeNaoAchado   = std::nullopt;  // sem valor
+    std::optional<int>         idadeEncontrada = 25;            // caixa com valor
+    std::optional<int>         idadeNaoAchada  = std::nullopt;  // caixa vazia (explícito)
+    std::optional<int>         idadePadrao;                     // caixa vazia (padrão)
+    std::optional<std::string> nomeEncontrado  = "Roger";       // caixa com valor
+    std::optional<std::string> nomeNaoAchado   = std::nullopt;  // caixa vazia
 
     std::cout << "--- STD::OPTIONAL<T> (C++17) ---" << std::endl;
     std::cout << std::boolalpha;
 
-    std::cout << "idadeEncontrada tem valor? " << idadeEncontrada.has_value() << std::endl;
-    std::cout << "idadeNaoAchada  tem valor? " << idadeNaoAchada.has_value()  << std::endl;
+    // .has_value() mostra se há conteúdo
+    std::cout << "idadeEncontrada (25)       tem valor? " << idadeEncontrada.has_value() << std::endl;
+    std::cout << "idadeNaoAchada  (nullopt)  tem valor? " << idadeNaoAchada.has_value()  << std::endl;
+    std::cout << "idadePadrao     (padrao)   tem valor? " << idadePadrao.has_value()
+              << "  <- opcional sem inicializacao tambem fica vazio" << std::endl;
 
-    // .value_or() é seguro: retorna o valor, ou o fallback se vazio — sem if/else
+    // .value_or() é seguro: retorna o valor, ou o fallback se vazio
     std::cout << "Idade encontrada (ou -1): " << idadeEncontrada.value_or(-1) << std::endl;
     std::cout << "Idade nao achada (ou -1): " << idadeNaoAchada.value_or(-1)  << std::endl;
+    std::cout << "Idade padrao     (ou -1): " << idadePadrao.value_or(-1)     << std::endl;
     std::cout << "Nome encontrado:          " << nomeEncontrado.value_or("Desconhecido") << std::endl;
     std::cout << "Nome nao achado:          " << nomeNaoAchado.value_or("Desconhecido")  << std::endl;
+
+    // .reset() esvazia um optional que tinha valor
+    idadeEncontrada.reset();
+    std::cout << "Apos .reset():            " << idadeEncontrada.value_or(-1)
+              << "  (idadeEncontrada foi esvaziada)" << std::endl;
     std::cout << std::endl;
 
 
