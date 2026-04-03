@@ -18,7 +18,6 @@
 #include "aula04_controle.h"
 #include <iostream>
 #include <string>
-#include <vector>
 #include <stack>
 #include <queue>
 
@@ -26,12 +25,12 @@ static void demonstrarEstruturas();
 static void demonstrarPilhaFila();
 
 // =============================================================================
-// PONTO DE ENTRADA DA AULA 03
+// PONTO DE ENTRADA DA AULA 04
 // =============================================================================
 void rodarAula04()
 {
     std::cout << "=============================================" << std::endl;
-    std::cout << "   AULA 03 - ESTRUTURAS DE CONTROLE         " << std::endl;
+    std::cout << "   AULA 04 - ESTRUTURAS DE CONTROLE         " << std::endl;
     std::cout << "=============================================" << std::endl << std::endl;
 
 
@@ -79,9 +78,33 @@ void rodarAula04()
         std::cout << "Conceito: F — Reprovado" << std::endl;
     }
 
-    // Operador ternário — use para condições simples e diretas
-    std::string status = (nota >= 60) ? "Aprovado" : "Reprovado";
-    std::cout << "Status: " << status << std::endl;
+    // -------------------------------------------------------------------------
+    // OPERADOR TERNÁRIO — forma compacta de if/else para expressões simples
+    // -------------------------------------------------------------------------
+    // Sintaxe: variavel = (condicao) ? valor_se_true : valor_se_false;
+    //
+    // Equivalência direta:
+    //   string s = (nota >= 60) ? "Aprovado" : "Reprovado";
+    //   É exatamente igual a:
+    //   string s;
+    //   if (nota >= 60) { s = "Aprovado"; } else { s = "Reprovado"; }
+    //
+    // REGRA: use apenas para condições de UMA linha e resultado simples.
+    //        Nunca aninhe ternários — isso vira ilegível muito rápido.
+    //        Se precisar de mais de um nível, use if/else.
+    // -------------------------------------------------------------------------
+
+    std::cout << "--- OPERADOR TERNÁRIO ---" << std::endl;
+    std::cout << "nota = " << nota << std::endl;
+
+    std::string aprovacaoStr = (nota >= 60) ? "Aprovado"  : "Reprovado";
+    std::string paridade     = (nota % 2 == 0) ? "par"    : "impar";
+    int         absoluto     = (nota >= 0)   ? nota       : -nota;
+
+    std::cout << "  Status   (ternario): " << aprovacaoStr << std::endl;
+    std::cout << "  Paridade (ternario): " << paridade     << std::endl;
+    std::cout << "  Absoluto (ternario): " << absoluto     << std::endl;
+    std::cout << std::endl;
 
     // Combinando condições com && e ||
     int idade    = 17;
@@ -211,7 +234,9 @@ void rodarAula04()
     std::cout << std::endl;
 
     // Range-based for (C++11) — jeito moderno de iterar coleções
-    std::vector<std::string> frutas = {"Maca", "Banana", "Laranja", "Uva"};
+    // Funciona com C-arrays (já conhecidos da Aula 02) — sem std::vector!
+    std::string frutas[]          = {"Maca", "Banana", "Laranja", "Uva"};
+    constexpr size_t NUM_FRUTAS   = sizeof(frutas) / sizeof(frutas[0]);
 
     std::cout << "Range-based for: ";
     for (const auto& fruta : frutas) {    // const auto& evita cópia de string
@@ -221,7 +246,7 @@ void rodarAula04()
 
     // Range-based for com índice (quando precisa do índice também)
     std::cout << "Com indice:      ";
-    for (size_t i = 0; i < frutas.size(); ++i) {
+    for (size_t i = 0; i < NUM_FRUTAS; ++i) {
         std::cout << "[" << i << "]" << frutas[i] << " ";
     }
     std::cout << std::endl << std::endl;
@@ -356,7 +381,7 @@ void rodarAula04()
     std::cout << std::endl;
 
     // Combinando break e continue: processar lista, parar em -1, pular zeros
-    std::vector<int> dados = {5, 0, 3, 0, 8, -1, 99, 42};
+    int dados[] = {5, 0, 3, 0, 8, -1, 99, 42};
 
     std::cout << "Processando lista (pula zeros, para no -1): ";
     for (const auto& valor : dados) {
@@ -552,7 +577,8 @@ static void demonstrarPilhaFila()
     std::stack<int> s;
     std::queue<int> q;
 
-    for (int v : {1, 2, 3}) {
+    int vals[] = {1, 2, 3};
+    for (int v : vals) {
         s.push(v);
         q.push(v);
     }
@@ -578,7 +604,8 @@ static void demonstrarPilhaFila()
 // =============================================================================
 static void demonstrarEstruturas()
 {
-    std::vector<int> notasDaTurma = {92, 45, 78, 60, 88, 33, 71, 55, 95, 62};
+    int notasDaTurma[]             = {92, 45, 78, 60, 88, 33, 71, 55, 95, 62};
+    constexpr size_t NUM_ALUNOS    = sizeof(notasDaTurma) / sizeof(notasDaTurma[0]);
 
     int totalAprovados   = 0;
     int totalReprovados  = 0;
@@ -589,7 +616,7 @@ static void demonstrarEstruturas()
     std::cout << "=== RELATORIO DA TURMA ===" << std::endl;
 
     // FOR + IF/ELSE: processar cada nota
-    for (size_t i = 0; i < notasDaTurma.size(); ++i) {
+    for (size_t i = 0; i < NUM_ALUNOS; ++i) {
         int nota     = notasDaTurma[i];
         std::string conceito;
         std::string resultado;
@@ -652,7 +679,7 @@ static void demonstrarEstruturas()
 
     // BREAK em busca do primeiro reprovado
     int indPrimReprovado = -1;
-    for (size_t i = 0; i < notasDaTurma.size(); ++i) {
+    for (size_t i = 0; i < NUM_ALUNOS; ++i) {
         if (notasDaTurma[i] < 60) {
             indPrimReprovado = static_cast<int>(i) + 1;
             break;
