@@ -6,14 +6,17 @@ Cada aula cobre um topico da linguagem com exemplos comentados e executaveis no 
 
 ## Aulas
 
-| #   | Topico                                                                                                  | Arquivo                          |
-| --- | ------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| 01  | Tipos de dados (bool, char, int, float, double, short, long, unsigned)                                  | `src/aula01_tipos.cpp`           |
-| 02  | Ponteiros (`*`, `&`, `nullptr`), Pilha (LIFO), Fila (FIFO), Matriz                                     | `src/aula02_ponteiros.cpp`       |
-| 03  | Tipos modernos C++11/17 (auto, decltype, nullptr, int32_t, size_t, string, optional)                   | `src/aula03_tipos_modernos.cpp`  |
-| 04  | Estruturas de controle (if/else, switch, for, while, do-while, break, continue)                         | `src/aula04_controle.cpp`        |
-
-> Aulas 03 e 04 estao bloqueadas no menu — serao liberadas conforme o curso avanca.
+| #   | Topico                                                                                                       | Arquivo                          |
+| --- | ------------------------------------------------------------------------------------------------------------ | -------------------------------- |
+| 00  | Introducao — anatomia de um programa C++                                                                     | `src/aula00_intro.cpp`           |
+| 01  | Tipos de dados (bool, char, int, float, double, short, long, unsigned, operadores, cast, overflow, const)    | `src/aula01_tipos.cpp`           |
+| 02  | Arrays, Ponteiros (`*`, `&`, `nullptr`), Pilha (LIFO), Fila (FIFO), Matriz                                   | `src/aula02_ponteiros.cpp`       |
+| 03  | Tipos modernos C++11/17 (auto, decltype, nullptr, int32_t, size_t, string, optional, constexpr)              | `src/aula03_tipos_modernos.cpp`  |
+| 04  | Estruturas de controle (if/else, switch, for, while, do-while) + operadores ISO C++ (and/or/not)             | `src/aula04_controle.cpp`        |
+| 05  | Conteineres e Tipos Compostos (std::array, std::vector, struct, enum class)                                  | `src/aula05_containers.cpp`      |
+| 06  | Funcoes (void, return, valor/referencia, inline, sobrecarga)                                                 | `src/aula06_funcoes.cpp`         |
+| 07  | Orientacao a Objetos (class, acesso, heranca, virtual, friend, explicit)                                     | `src/aula07_oop.cpp`             |
+| 08  | Memoria e Ponteiros (new/delete, const, static, sizeof, this)                                                | `src/aula08_memoria.cpp`         |
 
 ---
 
@@ -121,16 +124,26 @@ O executavel `build/cppsmoke` so existe apos a etapa de compilacao.
 ```
 .
 ├── include/                  # Headers (.h) de cada aula
+│   ├── aula00_intro.h
 │   ├── aula01_tipos.h
 │   ├── aula02_ponteiros.h
 │   ├── aula03_tipos_modernos.h
-│   └── aula04_controle.h
+│   ├── aula04_controle.h
+│   ├── aula05_containers.h
+│   ├── aula06_funcoes.h
+│   ├── aula07_oop.h
+│   └── aula08_memoria.h
 ├── src/                      # Implementacoes (.cpp) + ponto de entrada
 │   ├── main.cpp              # Menu de selecao de aula
+│   ├── aula00_intro.cpp
 │   ├── aula01_tipos.cpp
 │   ├── aula02_ponteiros.cpp
 │   ├── aula03_tipos_modernos.cpp
-│   └── aula04_controle.cpp
+│   ├── aula04_controle.cpp
+│   ├── aula05_containers.cpp
+│   ├── aula06_funcoes.cpp
+│   ├── aula07_oop.cpp
+│   └── aula08_memoria.cpp
 ├── exercicios/               # Exercicios e solucoes por aula
 ├── CMakeLists.txt            # Definicao do build (fontes, flags, C++20)
 ├── CMakePresets.json         # Presets opcionais do CMake
@@ -150,8 +163,15 @@ Ao executar, um menu aparece no terminal:
 ================================
    SELECIONE A AULA
 ================================
+ 0 - Introducao (comece aqui!)
  1 - Tipos de dados
- 2 - Ponteiros, Pilha, Fila e Matriz
+ 2 - Array, Ponteiros, Pilha, Fila e Matriz
+ 3 - Tipos modernos C++11/17
+ 4 - Estruturas de controle
+ 5 - Conteineres e Tipos Compostos
+ 6 - Funcoes
+ 7 - Orientacao a Objetos
+ 8 - Memoria e Ponteiros
 ================================
 Aula:
 ```
