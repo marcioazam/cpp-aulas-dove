@@ -5,6 +5,8 @@
 #include "aula03_tipos_modernos.h"
 #include "aula04_controle.h"
 #include "aula05_containers.h"
+#include "aula06_funcoes.h"
+#include "aula07_oop.h"
 
 int main()
 {
@@ -19,6 +21,8 @@ int main()
     std::cout << " 3 - Tipos modernos C++11/17   " << std::endl;
     std::cout << " 4 - Estruturas de controle    " << std::endl;
     std::cout << " 5 - Conteineres e Tipos Compostos " << std::endl;
+    std::cout << " 6 - Funcoes                   " << std::endl;
+    std::cout << " 7 - Orientacao a Objetos      " << std::endl;
     std::cout << "================================" << std::endl;
     std::cout << "Aula: ";
     std::cin >> aula;
@@ -48,6 +52,14 @@ int main()
 
         case 5:
             rodarAula05();
+            break;
+
+        case 6:
+            rodarAula06();
+            break;
+
+        case 7:
+            rodarAula07();
             break;
 
         default:

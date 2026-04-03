@@ -14,6 +14,8 @@ add_executable(cppsmoke
     src/aula03_tipos_modernos.cpp
     src/aula04_controle.cpp
     src/aula05_containers.cpp
+    src/aula06_funcoes.cpp
+    src/aula07_oop.cpp
 )
 target_include_directories(cppsmoke PRIVATE include)
 
