@@ -7,6 +7,7 @@
 #include "aula05_containers.h"
 #include "aula06_funcoes.h"
 #include "aula07_oop.h"
+#include "aula08_memoria.h"
 
 int main()
 {
@@ -23,6 +24,7 @@ int main()
     std::cout << " 5 - Conteineres e Tipos Compostos " << std::endl;
     std::cout << " 6 - Funcoes                   " << std::endl;
     std::cout << " 7 - Orientacao a Objetos      " << std::endl;
+    std::cout << " 8 - Memoria e Ponteiros       " << std::endl;
     std::cout << "================================" << std::endl;
     std::cout << "Aula: ";
     std::cin >> aula;
@@ -60,6 +62,10 @@ int main()
 
         case 7:
             rodarAula07();
+            break;
+
+        case 8:
+            rodarAula08();
             break;
 
         default:

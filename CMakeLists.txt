@@ -16,6 +16,7 @@ add_executable(cppsmoke
     src/aula05_containers.cpp
     src/aula06_funcoes.cpp
     src/aula07_oop.cpp
+    src/aula08_memoria.cpp
 )
 target_include_directories(cppsmoke PRIVATE include)
 
